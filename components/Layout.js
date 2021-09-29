@@ -1,7 +1,7 @@
 export default function Layout({ children }) {
   return (
     <div className="border container mx-auto">
-      <header id="header-layout" className="text-center my-5 h-20 bg-blue-600 ">
+      <header id="color-primary" className="text-center my-5 h-20 bg-blue-600 ">
         <h1 className="text-blue-200">M10</h1>
       </header>
       <main>{children}</main>

@@ -4,6 +4,9 @@
 @tailwind utilities;
 
 
-#header-layout{
-  color: black;
+#color-primary{
+  background-color: #2E4B91;
+}
+button{
+  background-color:#DAE3ED;
 }
