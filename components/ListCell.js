@@ -8,7 +8,6 @@ export default function ListCell() {
   useEffect(() => {
     api.get('/phone').then((response) => {
       setLista(response.data);
-      console.log(response.data);
     });
   }, []);
 

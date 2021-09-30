@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
+import { nanoid } from 'nanoid';
+import api from '../lib/api';
 
 const validationSchema = Yup.object({
   model: Yup.string()
@@ -32,6 +35,8 @@ const validationSchema = Yup.object({
 });
 
 export default function Register() {
+  const router = useRouter();
+
   return (
     <div>
       <header>
@@ -48,16 +53,16 @@ export default function Register() {
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            const dados = {
-              ...values,
-              startDate: dayjs(values.startDate).format('DD/MM/YYYY'),
-              endDate: dayjs(values.endDate).format('DD/MM/YYYY'),
-            };
-            console.log(dados);
-            alert(JSON.stringify(dados, null, 2));
+          const dados = {
+            ...values,
+            code: nanoid(8),
+            date: dayjs(values.startDate).format('DD/MM/YYYY'),
+            endDate: dayjs(values.endDate).format('DD/MM/YYYY'),
+          };
+          api.post('/phone', dados).then(() => {
             setSubmitting(false);
-          }, 400);
+            router.push('/');
+          });
         }}
       >
         {({
