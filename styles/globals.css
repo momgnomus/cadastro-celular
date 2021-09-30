@@ -1,4 +1,4 @@
-/* ./styles/globals.css */
+/* ./styles/globals.css # */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +7,9 @@
 #color-primary{
   background-color: #2E4B91;
 }
-button{
-  background-color:#DAE3ED;
+#color-button{
+  background-color: #DAE3ED;
+}
+#color-text{
+  color: #DAE3ED;
 }

@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import api from '../lib/api';
 
 const validationSchema = Yup.object({
@@ -35,6 +35,7 @@ const validationSchema = Yup.object({
 });
 
 export default function Register() {
+  const nanoid = customAlphabet('1234567890abcdef', 8);
   const router = useRouter();
 
   return (
