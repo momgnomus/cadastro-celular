@@ -34,36 +34,36 @@ const validationSchema = Yup.object({
     }),
 });
 
-export default function Register() {
+export default function Register({ initialValue }) {
   const nanoid = customAlphabet('1234567890abcdef', 8);
   const router = useRouter();
 
   return (
-    <div>
-      <header>
+    <div className="flex flex-col container items-center">
+      <header className="font-semibold mb-2 text-lg">
         <h1>Detalhes do produto</h1>
       </header>
       <Formik
-        initialValues={{
-          model: '',
-          brand: '',
-          price: '',
-          startDate: '',
-          endDate: '',
-          color: 'BLACK',
-        }}
+        initialValues={initialValue}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           const dados = {
-            ...values,
             code: nanoid(8),
+            ...values,
             date: dayjs(values.startDate).format('DD/MM/YYYY'),
             endDate: dayjs(values.endDate).format('DD/MM/YYYY'),
           };
-          api.post('/phone', dados).then(() => {
-            setSubmitting(false);
-            router.push('/');
-          });
+          if (dados.id) {
+            api.patch(`/phone/${dados.id}`, dados).then(() => {
+              setSubmitting(false);
+              router.push('/');
+            });
+          } else {
+            api.post('/phone', dados).then(() => {
+              setSubmitting(false);
+              router.push('/');
+            });
+          }
         }}
       >
         {({
@@ -76,11 +76,14 @@ export default function Register() {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <form onSubmit={handleSubmit}>
-            <div>
+          <form
+            className="md:grid md:grid-cols-2 space-y-2 md:space-y-0 gap-4"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col">
               <label htmlFor="model">Modelo</label>
               <input
-                className="border"
+                className="border rounded-md p-1"
                 type="text"
                 name="model"
                 id="model"
@@ -91,10 +94,10 @@ export default function Register() {
               />
               {errors.model && touched.model && errors.model}
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor="brand">Marca</label>
               <input
-                className="border"
+                className="border rounded-md p-1"
                 type="text"
                 name="brand"
                 id="brand"
@@ -105,10 +108,10 @@ export default function Register() {
               />
               {errors.brand && touched.brand && errors.brand}
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor="color">Cor</label>
               <select
-                className="border"
+                className="border rounded-md p-1"
                 name="color"
                 id="color"
                 value={values.color}
@@ -122,10 +125,10 @@ export default function Register() {
               </select>
               {errors.color && touched.color && errors.color}
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor="price">Preço</label>
               <input
-                className="border"
+                className="border rounded-md p-1"
                 type="number"
                 name="price"
                 id="price"
@@ -136,10 +139,10 @@ export default function Register() {
               />
               {errors.price && touched.price && errors.price}
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor="startDate">Inicio das vendas</label>
               <input
-                className="border"
+                className="border rounded-md p-1"
                 type="date"
                 name="startDate"
                 id="startDate"
@@ -150,10 +153,10 @@ export default function Register() {
               />
               {errors.startDate && touched.startDate && errors.startDate}
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor="endDate">Fim das vendas</label>
               <input
-                className="border"
+                className="border rounded-md p-1"
                 type="date"
                 name="endDate"
                 id="endDate"
@@ -164,14 +167,25 @@ export default function Register() {
               />
               {errors.endDate && touched.endDate && errors.endDate}
             </div>
-            <Link href="/">
-              <button className="border" type="button">
-                Voltar
+            <div className="col-end-3 flex justify-between px-3">
+              <Link href="/">
+                <button
+                  id="color-button"
+                  className="border rounded-md px-3"
+                  type="button"
+                >
+                  Voltar
+                </button>
+              </Link>
+              <button
+                id="color-button"
+                className="border rounded-md px-3"
+                disabled={isSubmitting}
+                type="submit"
+              >
+                Salvar
               </button>
-            </Link>
-            <button className="border" disabled={isSubmitting} type="submit">
-              Salvar
-            </button>
+            </div>
           </form>
         )}
       </Formik>

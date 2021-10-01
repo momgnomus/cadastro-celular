@@ -9,6 +9,8 @@ export default function ListCell() {
     api.get('/phone').then((response) => {
       setLista(
         response.data.map((item) => ({
+          // eslint-disable-next-line no-underscore-dangle
+          id: item._id,
           code: item.code,
           model: item.model,
           price: item.price,
@@ -19,21 +21,16 @@ export default function ListCell() {
     });
   }, []);
 
-  const editarCadastro = (selecionado) => {
-    const cadastro = lista.find((item) => item.id === selecionado);
-    handleChange(cadastro.item.model);
-  };
-
   const excluirCadastro = (selecionado) => {
     api.delete(`/phone/${selecionado}`).then(() => {
-      const novaLista = lista.filter((item) => item.code !== selecionado);
+      const novaLista = lista.filter((item) => item.id !== selecionado);
       setLista(novaLista);
     });
   };
 
   return (
     <div className="flex flex-col container px-4 md:px-28">
-      <header className="flex justify-between items-center font-semibold mb-2">
+      <header className="flex justify-between items-center font-semibold mb-2 text-lg">
         <div>
           <h1>Produtos</h1>
         </div>
@@ -64,9 +61,9 @@ export default function ListCell() {
           </div>
         </Link>
       </header>
-      <table className="border">
+      <table>
         <thead>
-          <tr className="border grid md:grid-cols-7 text-xs md:text-sm pl-4">
+          <tr className="border rounded-t-md grid md:grid-cols-7 text-xs md:text-sm pl-4">
             <td className="col-span-7 md:col-span-1">Codigo</td>
             <td className="col-span-7 md:col-span-1">Modelo</td>
             <td className="col-span-7 md:col-span-1">Preço</td>
@@ -76,18 +73,19 @@ export default function ListCell() {
         </thead>
         <tbody>
           {lista?.map((item) => (
-            <tr className="border grid grid-cols-7 text-xs md:text-sm pl-4 py-1">
+            <tr
+              key={item.id}
+              className="border grid grid-cols-7 text-xs md:text-sm pl-4 py-1"
+            >
               <td className="col-span-7 md:col-span-1 ">{item.code}</td>
               <td className="col-span-7 md:col-span-1  ">{item.model}</td>
               <td className="col-span-7 md:col-span-1  ">{item.price}</td>
               <td className="col-span-7 md:col-span-1 ">{item.brand}</td>
               <td className="col-span-7 md:col-span-1 ">{item.color}</td>
-              <Link href="/addCell">
-                <td className="col-span-7 md:col-span-1 ">
-                  <button
-                    onClick={() => editarCadastro(item.code)}
-                    type="button"
-                  >
+
+              <td className="col-span-7 md:col-span-1 ">
+                <Link href={`/${item.id}/update`}>
+                  <button type="button">
                     {' '}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -98,13 +96,8 @@ export default function ListCell() {
                       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                     </svg>
                   </button>
-                </td>
-              </Link>
-              <td className="col-span-7 md:col-span-1 ">
-                <button
-                  onClick={() => excluirCadastro(item.code)}
-                  type="button"
-                >
+                </Link>
+                <button onClick={() => excluirCadastro(item.id)} type="button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
