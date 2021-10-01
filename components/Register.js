@@ -35,7 +35,7 @@ const validationSchema = Yup.object({
 });
 
 export default function Register({ initialValue }) {
-  const nanoid = customAlphabet('1234567890abcdef', 8);
+  const nanoid = customAlphabet('1234567890', 8);
   const router = useRouter();
 
   return (
