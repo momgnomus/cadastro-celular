@@ -63,27 +63,27 @@ export default function ListCell() {
       </header>
       <table>
         <thead>
-          <tr className="border rounded-t-md grid md:grid-cols-7 text-xs md:text-sm pl-4">
-            <td className="col-span-7 md:col-span-1">Codigo</td>
-            <td className="col-span-7 md:col-span-1">Modelo</td>
-            <td className="col-span-7 md:col-span-1">Preço</td>
-            <td className="col-span-7 md:col-span-1">Marca</td>
-            <td className="col-span-7 md:col-span-1">Cor</td>
+          <tr className="border rounded-t-md flex flex-col md:grid md:grid-cols-6 text-xs md:text-sm pl-4 space-y-2 md:space-y-0">
+            <td className="col-span-1">Codigo</td>
+            <td className="col-span-1">Modelo</td>
+            <td className="col-span-1">Preço</td>
+            <td className="col-span-1">Marca</td>
+            <td className="col-span-1">Cor</td>
           </tr>
         </thead>
         <tbody>
           {lista?.map((item) => (
             <tr
               key={item.id}
-              className="border grid grid-cols-7 text-xs md:text-sm pl-4 py-1"
+              className="border flex flex-col md:grid md:grid-cols-6 text-xs md:text-sm pl-4 py-1 space-y-2 md:space-y-0"
             >
-              <td className="col-span-7 md:col-span-1 ">{item.code}</td>
-              <td className="col-span-7 md:col-span-1  ">{item.model}</td>
-              <td className="col-span-7 md:col-span-1  ">{item.price}</td>
-              <td className="col-span-7 md:col-span-1 ">{item.brand}</td>
-              <td className="col-span-7 md:col-span-1 ">{item.color}</td>
+              <td className="col-span-1 ">{item.code}</td>
+              <td className="col-span-1  ">{item.model}</td>
+              <td className="col-span-1  ">{item.price}</td>
+              <td className="col-span-1 ">{item.brand}</td>
+              <td className="col-span-1 ">{item.color}</td>
 
-              <td className="col-span-7 md:col-span-1 ">
+              <td className="col-span-1 flex justify-end space-x-4 px-4">
                 <Link href={`/${item.id}/update`}>
                   <button type="button">
                     {' '}
