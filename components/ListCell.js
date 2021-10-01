@@ -2,6 +2,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import api from '../lib/api';
 
+const colors = {
+  BLACK: 'Preto',
+  WHITE: 'Branco',
+  GOLD: 'Dourado',
+  PINK: 'Rosa',
+};
+
 export default function ListCell() {
   const [lista, setLista] = useState();
 
@@ -81,7 +88,7 @@ export default function ListCell() {
               <td className="col-span-1  ">{item.model}</td>
               <td className="col-span-1  ">{item.price}</td>
               <td className="col-span-1 ">{item.brand}</td>
-              <td className="col-span-1 ">{item.color}</td>
+              <td className="col-span-1 ">{colors[item.color]}</td>
 
               <td className="col-span-1 flex justify-end space-x-4 px-4">
                 <Link href={`/${item.id}/update`}>
